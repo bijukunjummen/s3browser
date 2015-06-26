@@ -1,0 +1,39 @@
+<div class="row">
+    <div ng-if="errormessage">
+        <p class="text-center bg-danger">{{errormessage}}</p>
+    </div>
+    <div ng-if="statusmessage">
+        <p class="text-center bg-info">{{statusmessage}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>List of S3 Buckets</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="40%">Name</th>
+                            <th width="30%">Owner</th>
+                            <th width="30%">Created Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="bucket in buckets">
+                            <td><a ui-sref="listbucket({bucket: bucket.name, prefix:''})">{{bucket.name}}</a></td>
+                            <td>{{bucket.owner.displayName}}</td>
+                            <td>{{bucket.creationDate | date : 'medium'  }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

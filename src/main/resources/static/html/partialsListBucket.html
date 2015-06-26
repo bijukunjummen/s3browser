@@ -1,0 +1,72 @@
+<div class="row">
+    <div ng-if="errormessage">
+        <p class="text-center bg-danger">{{errormessage}}</p>
+    </div>
+    <div ng-if="statusmessage">
+        <p class="text-center bg-info">{{statusmessage}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <div ng-if="prefix"><h5>Current Bucket: {{bucket}} , Current Prefix: {{prefix}}</h5></div>
+                <div ng-if="!prefix"><h5>Current Bucket: {{bucket}}</h5></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h5>Folders</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="40%">Folder Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in objectListing.commonPrefixes">
+                            <td><a ui-sref="listbucket({bucket: bucket, prefix: item})">{{item}}</a></td>
+                        </tr>
+                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h5>Items</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="30%">Name</th>
+                            <th width="20%">Owner</th>
+                            <th width="20%">Last Modified</th>
+                            <th width="20%">Size</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in objectListing.objectSummaries">
+                            <td>{{item.key}}</td>
+                            <td>{{item.owner.displayName}}</td>
+                            <td>{{item.lastModified | date : 'medium'  }}</td>
+                            <td>{{item.size}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
