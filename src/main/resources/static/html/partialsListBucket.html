@@ -10,14 +10,14 @@
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-12">
-                <div ng-if="prefix"><h5>Current Bucket: {{bucket}} , Current Prefix: {{prefix}}</h5></div>
-                <div ng-if="!prefix"><h5>Current Bucket: {{bucket}}</h5></div>
+                <div ng-if="prefix"><h5><label>Current Bucket:</label> {{bucket}}, <label>Current Prefix:</label> {{prefix}}</h5></div>
+                <div ng-if="!prefix"><h5><label>Current Bucket:</label> {{bucket}}</h5></div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-xs-12">
-                <h5>Folders</h5>
+                <h4>Folders</h4>
             </div>
         </div>
         <div class="row">
@@ -33,7 +33,12 @@
                         <tr ng-repeat="item in objectListing.commonPrefixes">
                             <td><a ui-sref="listbucket({bucket: bucket, prefix: item})">{{item}}</a></td>
                         </tr>
-                        
+                        <tr ng-if="objectListing.commonPrefixes.length == 0">
+                            <td><p class="text-center">No sub-folders in this folder!</p></td>
+                        </tr>
+                        <tr ng-if="!listLoaded">
+                            <td><p class="text-center">Loading...</p></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -41,7 +46,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <h5>Items</h5>
+                <h4>Items</h4>
             </div>
         </div>
         <div class="row">
@@ -62,6 +67,12 @@
                             <td>{{item.owner.displayName}}</td>
                             <td>{{item.lastModified | date : 'medium'  }}</td>
                             <td>{{item.size}}</td>
+                        </tr>
+                        <tr ng-if="objectListing.objectSummaries.length == 0">
+                            <td colspan="4"><p class="text-center">No files in this folder!</p></td>
+                        </tr>
+                        <tr ng-if="!listLoaded">
+                            <td colspan="4"><p class="text-center">Loading...</p></td>
                         </tr>
                         </tbody>
                     </table>

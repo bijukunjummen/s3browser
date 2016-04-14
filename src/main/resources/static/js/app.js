@@ -7,12 +7,12 @@ s3BrowserApp.config(function ($stateProvider, $urlRouterProvider) {
         .state('s3buckets', {
             url: '/s3buckets',
             templateUrl: URLS.partialsBuckets,
-            controller: 'S3Controller'
+            controller: 'BucketListingController'
         })
         .state('listbucket', {
             url: '/listbucket?bucket&prefix',
             templateUrl: URLS.partialsListBucket,
-            controller: 'BucketListingController'
+            controller: 'BucketContentController'
         }).
         state('about', {
             url: '/about',
@@ -48,15 +48,18 @@ s3BrowserApp.factory("s3BucketsFactory", function ($http) {
 });
 
 
-s3BrowserApp.controller("S3Controller", function ($scope, s3BucketsFactory) {
+s3BrowserApp.controller("BucketListingController", function ($scope, s3BucketsFactory) {
     function init() {
         $scope.statusmessage = "";
         $scope.errormessage = '';
+        $scope.listLoaded = false;
 
         s3BucketsFactory.getBuckets().success(function (data) {
             $scope.buckets = data;
+            $scope.listLoaded = true;
         }).error(function (data, status, errors, config) {
             $scope.setErrorMessage("Could not load list of buckets!");
+            $scope.listLoaded = true;
         });
     }
 
@@ -73,7 +76,7 @@ s3BrowserApp.controller("S3Controller", function ($scope, s3BucketsFactory) {
     init();
 });
 
-s3BrowserApp.controller("BucketListingController", function ($scope, s3BucketsFactory, $stateParams) {
+s3BrowserApp.controller("BucketContentController", function ($scope, s3BucketsFactory, $stateParams) {
     function init() {
         $scope.statusmessage = "";
         $scope.errormessage = '';
